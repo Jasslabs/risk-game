@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Game - Diagnostics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        .test-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .test-item:last-child {
+            border-bottom: none;
+        }
+        .status {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+        .status.success {
+            background: #27ae60;
+        }
+        .status.error {
+            background: #e74c3c;
+        }
+        .status.warning {
+            background: #f39c12;
+        }
+        .status.info {
+            background: #3498db;
+        }
+        .test-label {
+            flex: 1;
+        }
+        .test-value {
+            color: #666;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .log {
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 0.9em;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+        }
+        .log-entry.success { color: #27ae60; }
+        .log-entry.error { color: #e74c3c; }
+        .log-entry.info { color: #3498db; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Risk Game - System Diagnostics</h1>
+        
+        <div class="test-section">
+            <h2>Browser & Environment</h2>
+            <div class="test-item">
+                <div class="status success">✓</div>
+                <div class="test-label">Browser</div>
+                <div class="test-value" id="browser">Detecting...</div>
+            </div>
+            <div class="test-item">
+                <div class="status success">✓</div>
+                <div class="test-label">Device Pixel Ratio</div>
+                <div class="test-value" id="dpr">Detecting...</div>
+            </div>
+            <div class="test-item">
+                <div class="status success">✓</div>
+                <div class="test-label">Screen Resolution</div>
+                <div class="test-value" id="resolution">Detecting...</div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>JavaScript Files</h2>
+            <div class="test-item">
+                <div class="status" id="animStatus">?</div>
+                <div class="test-label">animations.js</div>
+                <div class="test-value" id="animValue">Not loaded</div>
+            </div>
+            <div class="test-item">
+                <div class="status" id="graphicsStatus">?</div>
+                <div class="test-label">graphics.js</div>
+                <div class="test-value" id="graphicsValue">Not loaded</div>
+            </div>
+            <div class="test-item">
+                <div class="status" id="aiStatus">?</div>
+                <div class="test-label">ai.js</div>
+                <div class="test-value" id="aiValue">Not loaded</div>
+            </div>
+            <div class="test-item">
+                <div class="status" id="gameStatus">?</div>
+                <div class="test-label">game.js</div>
+                <div class="test-value" id="gameValue">Not loaded</div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Canvas Support</h2>
+            <div class="test-item">
+                <div class="status" id="canvasStatus">?</div>
+                <div class="test-label">Canvas 2D Context</div>
+                <div class="test-value" id="canvasValue">Testing...</div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>API Connectivity</h2>
+            <div class="test-item">
+                <div class="status" id="phpStatus">?</div>
+                <div class="test-label">php/api.php</div>
+                <div class="test-value" id="phpValue">Testing...</div>
+            </div>
+            <div class="test-item">
+                <div class="status" id="dbStatus">?</div>
+                <div class="test-label">MySQL Connection</div>
+                <div class="test-value" id="dbValue">Testing...</div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Diagnostic Log</h2>
+            <div class="log" id="log">
+                <div class="log-entry info">[INFO] Starting diagnostics...</div>
+            </div>
+        </div>
+
+        <button onclick="location.href='index.html'">Go to Game</button>
+        <button onclick="runDiagnostics()" style="margin-left: 10px;">Run Full Test</button>
+    </div>
+
+    <script>
+        const log = {
+            info: (msg) => addLog(msg, 'info'),
+            success: (msg) => addLog(msg, 'success'),
+            error: (msg) => addLog(msg, 'error')
+        };
+
+        function addLog(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${type.toUpperCase()}] ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function setStatus(id, status, message) {
+            const statusEl = document.getElementById(id);
+            const valueEl = document.getElementById(id.replace('Status', 'Value'));
+            
+            statusEl.className = `status ${status}`;
+            statusEl.textContent = status === 'success' ? '✓' : status === 'error' ? '✗' : status === 'warning' ? '⚠' : '?';
+            
+            if (valueEl) {
+                valueEl.textContent = message;
+            }
+        }
+
+        // Browser detection
+        function detectBrowser() {
+            const ua = navigator.userAgent;
+            let browser = 'Unknown';
+            
+            if (ua.indexOf('Chrome') > -1) browser = 'Chrome';
+            else if (ua.indexOf('Safari') > -1) browser = 'Safari';
+            else if (ua.indexOf('Firefox') > -1) browser = 'Firefox';
+            else if (ua.indexOf('Edge') > -1) browser = 'Edge';
+            
+            document.getElementById('browser').textContent = browser;
+            document.getElementById('dpr').textContent = window.devicePixelRatio + 'x';
+            document.getElementById('resolution').textContent = window.innerWidth + 'x' + window.innerHeight;
+            log.success('Browser detected: ' + browser);
+        }
+
+        // Check for classes
+        function checkClasses() {
+            if (typeof AnimationEngine !== 'undefined') {
+                setStatus('animStatus', 'success', 'Loaded');
+                log.success('AnimationEngine class found');
+            } else {
+                setStatus('animStatus', 'error', 'Not found');
+                log.error('AnimationEngine class not found');
+            }
+
+            if (typeof GraphicsEngine !== 'undefined') {
+                setStatus('graphicsStatus', 'success', 'Loaded');
+                log.success('GraphicsEngine class found');
+            } else {
+                setStatus('graphicsStatus', 'error', 'Not found');
+                log.error('GraphicsEngine class not found');
+            }
+
+            if (typeof AIPlayer !== 'undefined') {
+                setStatus('aiStatus', 'success', 'Loaded');
+                log.success('AIPlayer class found');
+            } else {
+                setStatus('aiStatus', 'error', 'Not found');
+                log.error('AIPlayer class not found');
+            }
+
+            if (typeof RiskGame !== 'undefined') {
+                setStatus('gameStatus', 'success', 'Loaded');
+                log.success('RiskGame class found');
+            } else {
+                setStatus('gameStatus', 'error', 'Not found');
+                log.error('RiskGame class not found');
+            }
+        }
+
+        // Check Canvas
+        function checkCanvas() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            if (ctx) {
+                setStatus('canvasStatus', 'success', 'Supported');
+                log.success('Canvas 2D context available');
+            } else {
+                setStatus('canvasStatus', 'error', 'Not supported');
+                log.error('Canvas 2D context not available');
+            }
+        }
+
+        // Check API
+        async function checkAPI() {
+            try {
+                const response = await fetch('php/api.php?action=load_games');
+                if (response.ok) {
+                    const data = await response.json();
+                    setStatus('phpStatus', 'success', 'Connected');
+                    log.success('PHP API is responding');
+                    
+                    // If we got data, database is connected
+                    if (data.success) {
+                        setStatus('dbStatus', 'success', 'Connected');
+                        log.success('Database is connected and responding');
+                    } else {
+                        setStatus('dbStatus', 'warning', data.message || 'No response');
+                        log.error('Database error: ' + (data.message || 'Unknown'));
+                    }
+                } else {
+                    setStatus('phpStatus', 'error', `HTTP ${response.status}`);
+                    log.error(`PHP API returned HTTP ${response.status}`);
+                    setStatus('dbStatus', 'error', 'Unknown');
+                }
+            } catch (error) {
+                setStatus('phpStatus', 'error', error.message);
+                log.error('API error: ' + error.message);
+                setStatus('dbStatus', 'error', 'Not accessible');
+            }
+        }
+
+        // Run all diagnostics
+        async function runDiagnostics() {
+            log.info('Starting full diagnostic test...');
+            checkClasses();
+            checkCanvas();
+            await checkAPI();
+            log.success('Diagnostics complete!');
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            detectBrowser();
+            checkClasses();
+            checkCanvas();
+            checkAPI();
+        });
+    </script>
+</body>
+</html>

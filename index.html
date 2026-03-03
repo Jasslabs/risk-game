@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Game - Strategic Domination</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="game-title">⚔️ RISK: World Domination</h1>
+            <div class="header-stats">
+                <div class="stat-box">
+                    <span class="stat-label">Players:</span>
+                    <span class="stat-value" id="playerCount">2</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Turn:</span>
+                    <span class="stat-value" id="currentTurn">Player 1</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Game Status:</span>
+                    <span class="stat-value" id="gameStatus">Waiting to Start</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Game Area -->
+        <div class="game-area">
+            <!-- Game Board -->
+            <div class="board-container">
+                <canvas id="gameBoard" width="1000" height="600"></canvas>
+                <div class="board-overlay">
+                    <div class="loading-spinner" id="spinner" style="display: none;"></div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Game Controls -->
+                <section class="panel">
+                    <h3>Game Controls</h3>
+                    <button id="startGameBtn" class="btn btn-primary">Start New Game</button>
+                    <button id="loadGameBtn" class="btn btn-secondary">Load Game</button>
+                    <button id="saveGameBtn" class="btn btn-secondary" disabled>Save Game</button>
+                    <button id="resetBtn" class="btn btn-danger">Reset</button>
+                </section>
+
+                <!-- Player Info -->
+                <section class="panel">
+                    <h3>Players</h3>
+                    <div id="playersList" class="players-list">
+                        <!-- Dynamically populated -->
+                    </div>
+                </section>
+
+                <!-- Territory Info -->
+                <section class="panel">
+                    <h3>Territory Info</h3>
+                    <div id="territoryInfo" class="territory-info">
+                        <p>Click on a territory to see details</p>
+                    </div>
+                </section>
+
+                <!-- Game Log -->
+                <section class="panel">
+                    <h3>Game Log</h3>
+                    <div id="gameLog" class="game-log">
+                        <p class="log-entry">Game initialized</p>
+                    </div>
+                </section>
+            </aside>
+        </div>
+
+        <!-- Modal for Game Setup -->
+        <div id="setupModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Game Setup</h2>
+                
+                <div class="setup-form">
+                    <label for="playerCountSelect">Number of Players:</label>
+                    <select id="playerCountSelect">
+                        <option value="2">2 Players</option>
+                        <option value="3">3 Players</option>
+                        <option value="4">4 Players</option>
+                        <option value="5">5 Players</option>
+                        <option value="6">6 Players</option>
+                    </select>
+
+                    <div id="playerNames">
+                        <!-- Dynamically populated -->
+                    </div>
+
+                    <button id="confirmSetupBtn" class="btn btn-primary">Start Game</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Battle Results -->
+        <div id="battleModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2>Battle Results</h2>
+                <div id="battleResults" class="battle-results">
+                    <!-- Dynamic content -->
+                </div>
+                <button id="battleOkBtn" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/animations.js"></script>
+    <script src="js/graphics.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
